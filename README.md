@@ -1,6 +1,7 @@
 # Advent of code 2017
 
 Me trying to solve [AoC 2017](http://adventofcode.com/2017) with [Rust](https://www.rust-lang.org).
+Most important goal is to create idiomatic Rust code here. Also learn some stuff.
 
 ## Running
 
