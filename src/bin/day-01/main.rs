@@ -22,10 +22,14 @@ const INPUT: &'static str = "818275977931166178424892653779931342156567268946849
 95354684962897616358722633724198278552339794629939574841672355699222747886785616814449297817352118\
 452284785694551841431869545321438468118";
 
-mod lib;
+mod part1;
+mod part2;
 mod traits;
 
 fn main() {
-    let result = lib::parse(INPUT);
-    println!("Day 01 CAPTCHA result: {}", result);
+    let result = part1::parse(INPUT);
+    println!("Day 01 part 1 CAPTCHA result: {}", result);
+
+    let result = part2::parse(INPUT);
+    println!("Day 01 part 2 CAPTCHA result: {}", result);
 }

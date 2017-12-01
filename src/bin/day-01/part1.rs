@@ -24,22 +24,22 @@ mod tests {
     use super::parse;
 
     #[test]
-    fn day_01_test_1() {
+    fn day01_part1_test1() {
         assert_eq!(3, parse("1122"));
     }
 
     #[test]
-    fn day_01_test_2() {
+    fn day01_part1_test2() {
         assert_eq!(4, parse("1111"));
     }
 
     #[test]
-    fn day_01_test_3() {
+    fn day01_part1_test3() {
         assert_eq!(0, parse("1234"));
     }
 
     #[test]
-    fn day_01_test_4() {
+    fn day01_part1_test4() {
         assert_eq!(9, parse("91212129"));
     }
 }

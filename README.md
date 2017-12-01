@@ -16,3 +16,7 @@ cargo test
 ```bash
 cargo run --bin day-01
 ```
+
+## Results
+
+1. Inverse Captcha - Learn iterators the hard way

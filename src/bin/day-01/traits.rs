@@ -1,4 +1,5 @@
 /// After original iterator ends, yields first element once again.
+/// Actually, acts almost like a `Cycle`, except of break after first element.
 #[derive(Clone, Debug)]
 #[must_use = "iterator adaptors are lazy and do nothing unless consumed"]
 pub struct CircularState<I> {
