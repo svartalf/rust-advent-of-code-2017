@@ -1,4 +1,4 @@
-use traits::Circular;
+use super::traits::Circular;
 
 
 pub fn parse(data: &str) -> usize {
@@ -21,6 +21,8 @@ pub fn parse(data: &str) -> usize {
 
 #[cfg(test)]
 mod tests {
+    use test::Bencher;
+
     use super::parse;
 
     #[test]
@@ -41,5 +43,12 @@ mod tests {
     #[test]
     fn day01_part1_test4() {
         assert_eq!(9, parse("91212129"));
+    }
+
+    #[bench]
+    fn day01_part1_bench(b: &mut Bencher) {
+        b.iter(|| {
+            parse("91212129")
+        })
     }
 }

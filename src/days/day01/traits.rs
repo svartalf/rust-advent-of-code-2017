@@ -1,5 +1,4 @@
 /// After original iterator ends, yields first element once again.
-/// Actually, acts almost like a `Cycle`, except of break after first element.
 #[derive(Clone, Debug)]
 #[must_use = "iterator adaptors are lazy and do nothing unless consumed"]
 pub struct CircularState<I> {
@@ -16,6 +15,7 @@ impl<I> Iterator for CircularState<I> where I: Clone + Iterator {
         match self.iter.next() {
             None if self.consumed == true => None,
             None => {
+                // TODO: It seems redundant to have else one copy for one element only
                 let mut iter = self.orig.clone();
                 self.consumed = true;
                 iter.next()

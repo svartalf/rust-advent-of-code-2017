@@ -14,7 +14,7 @@ cargo test
 2. Run specific day solver
 
 ```bash
-cargo run --bin day-01
+cargo run --bin day01
 ```
 
 ## Results
