@@ -1,4 +1,5 @@
-#![feature(test)]
+// #![feature(test)]
+#![feature(try_trait)]
 
 #[cfg(feature="nightly")]
 extern crate test;
