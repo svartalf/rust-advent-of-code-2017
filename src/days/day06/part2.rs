@@ -59,6 +59,6 @@ mod tests {
     fn day06_part1_test1() {
         let data = "0 2 7 0";
 
-        assert_eq!(5, parse(data));
+        assert_eq!(4, parse(data));
     }
 }
