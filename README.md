@@ -13,22 +13,14 @@ Also learn some stuff.
 cargo test
 ```
 
-2. Run specific day solver
+2. Run tests suite for a specific day
+
+```bash
+cargo test day01
+```
+
+3. Run specific day solver
 
 ```bash
 cargo run --bin day01
 ```
-
-## Results
-
-| Day                                        | Notes                                                                |
-| ------------------------------------------ | -------------------------------------------------------------------- |
-| 1. Inverse Captcha                         | Learn iterators the hard way                                         |
-| 2. Corruption Checksum                     | Iterators again                                                      |
-| 3. Spiral Memory                           | Terrible solution, should be reworked                                |
-| 4. High-Entropy Passphrases                | Iterators once again                                                 |
-| 5. A Maze of Twisty Trampolines, All Alike | Easy and plain one                                                   |
-| 6. Memory Reallocation                     | Easy, but custom iterator should be implemented instead of `get_max` |
-| 7. Recursive Circus                        | Still working on a proper implementation with arena-based hashmap    |
-| 8. I Heard You Like Registers              | Too much bloat code, but properly using conversion iterfaces though  |
-
