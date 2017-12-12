@@ -1,4 +1,5 @@
-pub fn parse(list: &mut Vec<usize>, input: &str) -> usize {
+pub fn parse(input: &str) -> usize {
+    let mut list: Vec<usize> = (0..256).collect();
     let mut current = 0usize;
     let mut skip_size = 0usize;
     let lengths: Vec<usize> = input.split(",").map(|part| {
@@ -33,7 +34,7 @@ mod tests {
         let mut list: Vec<usize> = vec![0, 1, 2, 3, 4];
         let input = "3,4,1,5";
 
-        assert_eq!(12, parse(&mut list, input));
+        assert_eq!(12, parse(input));
     }
 
 }
