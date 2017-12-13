@@ -48,9 +48,4 @@ impl<T> Scanner<T> {
 
         &self.data[self.current]
     }
-
-    pub fn reset(&mut self) {
-        self.current = 0;
-        self.direction = Direction::Forward;
-    }
 }
