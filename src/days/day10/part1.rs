@@ -31,7 +31,6 @@ mod tests {
 
     #[test]
     fn day10_part1_test1() {
-        let mut list: Vec<usize> = vec![0, 1, 2, 3, 4];
         let input = "3,4,1,5";
 
         assert_eq!(12, parse(input));
