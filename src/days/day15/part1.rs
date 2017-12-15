@@ -16,24 +16,21 @@ impl Iterator for Generator {
     type Item = usize;
 
     fn next(&mut self) -> Option<Self::Item> {
-        let value = (self.current * self.factor) % 2147483647;
-        self.current = value;
+        self.current = (self.current * self.factor) % 2147483647;
 
-        Some(value)
+        Some(self.current)
     }
 }
 
 pub fn parse(input: &str) -> usize {
     let start: Vec<_> = input.lines().map(|line | line.parse::<usize>().unwrap()).collect();
-    let mut a = Generator::new(start[0], 16807);
-    let mut b = Generator::new(start[1], 48271);
+    let a = Generator::new(start[0], 16807);
+    let b = Generator::new(start[1], 48271);
 
-    (0..40_000_000)
-        .filter(|_ | {
-            let a_value = a.next().unwrap() & 0xffff;
-            let b_value = b.next().unwrap() & 0xffff;
-
-            a_value == b_value
+    a.zip(b)
+        .take(40_000_000)
+        .filter(|&(v1, v2)| {
+            v1 & 0xffff == v2 & 0xffff
         })
         .count()
 }
