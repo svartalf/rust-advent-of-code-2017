@@ -1,14 +1,20 @@
 use std::str::FromStr;
 
 #[derive(Debug)]
+pub enum Value {
+    Raw(isize),
+    Register(char),
+}
+
+#[derive(Debug)]
 pub enum Instruction {
     Snd(char),
-    Set(char, isize),
-    Add(char, isize),
-    Mul(char, char),
-    Mod(char, isize),
+    Set(char, Value),
+    Add(char, Value),
+    Mul(char, Value),
+    Mod(char, Value),
     Rcv(char),
-    Jgz(char, isize),
+    Jgz(char, Value),
 }
 
 impl FromStr for Instruction {
@@ -16,38 +22,30 @@ impl FromStr for Instruction {
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
         let mut parts = s.split_whitespace();
-        match parts.next() {
-            Some("snd") => Ok(Instruction::Snd(
-                parts.next().unwrap().chars().next().unwrap(),
-            )),
-            Some("set") => Ok(Instruction::Set(
-                parts.next().unwrap().chars().next().unwrap(),
-                parts.next().unwrap().parse().unwrap(),
-            )),
-            Some("add") => Ok(Instruction::Add(
-                parts.next().unwrap().chars().next().unwrap(),
-                parts.next().unwrap().parse().unwrap(),
-            )),
-            Some("mul") => Ok(Instruction::Mul(
-                parts.next().unwrap().chars().next().unwrap(),
-                parts.next().unwrap().chars().next().unwrap(),
-            )),
-            Some("mod") => Ok(Instruction::Mod(
-                parts.next().unwrap().chars().next().unwrap(),
-                parts.next().unwrap().parse().unwrap(),
-            )),
-            Some("rcv") => Ok(Instruction::Rcv(
-                parts.next().unwrap().chars().next().unwrap(),
-            )),
-            Some("jgz") => Ok(Instruction::Jgz(
-                parts.next().unwrap().chars().next().unwrap(),
-                parts.next().unwrap().parse().unwrap(),
-            )),
+        let command = parts.next();
+        // X param is always a char
+        let x = parts.next().unwrap().chars().next().unwrap();
+        let mut y: Option<Value> = None;
+        if let Some(y_raw) = parts.next() {
+            if let Ok(value) = y_raw.parse::<isize>() {
+                y = Some(Value::Raw(value));
+            } else {
+                y = Some(Value::Register(y_raw.chars().next().unwrap()));
+            }
+        }
+
+        match command {
+            Some("snd") => Ok(Instruction::Snd(x)),
+            Some("rcv") => Ok(Instruction::Rcv(x)),
+            Some("set") => Ok(Instruction::Set(x, y.unwrap())),
+            Some("add") => Ok(Instruction::Add(x, y.unwrap())),
+            Some("mul") => Ok(Instruction::Mul(x, y.unwrap())),
+            Some("mod") => Ok(Instruction::Mod(x, y.unwrap())),
+            Some("jgz") => Ok(Instruction::Jgz(x, y.unwrap())),
             _ => Err(()),
         }
     }
 }
-
 
 #[cfg(test)]
 mod tests {

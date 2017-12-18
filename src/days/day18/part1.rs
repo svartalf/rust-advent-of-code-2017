@@ -1,39 +1,84 @@
 use std::collections::HashMap;
 
-use super::common::Instruction;
+use super::common::{Instruction, Value};
 
-pub fn parse(data: &str) -> usize {
-    let mut map: HashMap<char, isize> = HashMap::new();
-    for chr in "abcdefghijklmnopqrstuvwxyz".chars() {
-        map.insert(chr, 0);
+fn get_value(map: &HashMap<char, isize>, value: &Value) -> isize {
+    match value {
+        &Value::Raw(ref val) => *val,
+        &Value::Register(register) => *map.get(&register).unwrap_or(&0),
     }
+}
 
+pub fn parse(data: &str) -> isize {
     let instructions: Vec<_> = data.lines()
         .map(|line| line.parse::<Instruction>().unwrap())
         .collect();
+    let mut map: HashMap<char, isize> = "abcdefghijklmnopqrstuvwxyz".chars()
+        .map(|chr| (chr, 0)).collect();
+    let mut last_freq: Option<isize> = None;
+    let mut idx = 0;
 
-    println!("{:?}", instructions);
+    loop {
+        if idx > instructions.len() {
+            break;
+        }
 
-    for instruction in instructions.iter() {
-        match instruction {
-            &Instruction::Add(register, value) => {
+        match instructions[idx] {
+            Instruction::Add(register, ref value) => {
+                let val = get_value(&map, &value);
                 let entry = map.entry(register).or_insert(0);
-                (*entry) += value;
+                (*entry) += val;
+
+                idx += 1;
             }
-            &Instruction::Mul(register1, register2) => {
-                let value = *map.get(&register2).unwrap();
+            Instruction::Mul(register1, ref value) => {
+                let val = get_value(&map, &value);
                 let entry = map.entry(register1).or_insert(0);
-                (*entry) *= value;
+                (*entry) *= val;
+
+                idx += 1;
             },
-            &Instruction::Mod(register, value) => {
+            Instruction::Mod(register, ref value) => {
+                let val = get_value(&map, &value);
                 let entry = map.entry(register).or_insert(0);
-                (*entry) = (*entry % value + value) % value;
+                (*entry) = (*entry % val + val) % val;
+
+                idx += 1;
             },
-            &Instruction::Set(register, value) => {
+            Instruction::Set(register, ref value) => {
+                let val = get_value(&map, &value);
                 let entry = map.entry(register).or_insert(0);
-                (*entry) = value;
-            }
-            _ => {}
+                (*entry) = val;
+
+                idx += 1;
+            },
+            Instruction::Jgz(register, ref value) => {
+                let cmp = *map.get(&register).unwrap_or(&0);
+                if cmp > 0 {
+                    let val = get_value(&map, &value);
+                    if val > 0 {
+                        idx += val as usize;
+                    } else {
+                        idx -= val.abs() as usize;
+                    }
+                } else {
+                    idx += 1;
+                }
+            },
+            Instruction::Snd(register) => {
+                let freq = map.get(&register).unwrap_or(&0);
+                last_freq = Some(*freq);
+
+                idx += 1;
+            },
+            Instruction::Rcv(register) => {
+                let entry = map.entry(register).or_insert(0);
+                if *entry != 0 {
+                    return last_freq.unwrap();
+                }
+
+                idx += 1;
+            },
         }
     }
 
