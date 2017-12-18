@@ -27,6 +27,6 @@ mod tests {
         let programs = "abcde";
         let steps = "s1,x3/4,pe/b";
 
-        assert_eq!("baedc", &parse(programs, steps, 1));
+        assert_eq!("baedc", &parse(programs, steps));
     }
 }
