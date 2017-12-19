@@ -16,5 +16,11 @@ pub fn read<T>(path: T) -> Result<String> where T: AsRef<Path> {
     let mut contents = String::new();
     f.read_to_string(&mut contents)?;
 
-    Ok(contents.trim().to_string())
+    Ok(contents)
+}
+
+pub fn read_trim<T>(path: T) -> Result<String> where T: AsRef<Path> {
+    let value = read(path)?;
+
+    Ok(value.trim().to_string())
 }

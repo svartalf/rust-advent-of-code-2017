@@ -1,5 +1,5 @@
-pub fn parse(input: &str) -> usize {
-    let mut list: Vec<usize> = (0..256).collect();
+pub fn parse(elements: usize, input: &str) -> usize {
+    let mut list: Vec<usize> = (0..elements).collect();
     let mut current = 0usize;
     let mut skip_size = 0usize;
     let lengths: Vec<usize> = input.split(",").map(|part| {
@@ -21,7 +21,7 @@ pub fn parse(input: &str) -> usize {
         current += length + skip_size;
         skip_size += 1;
     }
-
+    println!("{:?}", list);
     list.iter().take(2).fold(1, |acc, value| acc * value)
 }
 
@@ -33,7 +33,7 @@ mod tests {
     fn day10_part1_test1() {
         let input = "3,4,1,5";
 
-        assert_eq!(12, parse(input));
+        assert_eq!(12, parse(5, input));
     }
 
 }
