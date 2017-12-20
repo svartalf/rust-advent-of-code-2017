@@ -4,6 +4,8 @@
 #[cfg(feature="nightly")]
 extern crate test;
 
+extern crate regex;
+
 use std::io::{Read, Result};
 use std::fs::File;
 use std::path::Path;

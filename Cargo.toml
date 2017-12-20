@@ -4,6 +4,9 @@ version = "0.1.0"
 authors = ["svartalf <self@svartalf.info>"]
 publish = false
 
+[dependencies]
+regex = "*"
+
 [features]
 default = []
 nightly = []
